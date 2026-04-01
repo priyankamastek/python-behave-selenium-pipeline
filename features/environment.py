@@ -2,7 +2,7 @@ from utilities import ConfigReader
 from selenium import webdriver
 import allure
 from allure_commons.types import AttachmentType
-from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import WebDriverException

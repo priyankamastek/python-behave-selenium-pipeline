@@ -2,7 +2,7 @@ from utilities import ConfigReader
 from selenium import webdriver
 import allure
 from allure_commons.types import AttachmentType
-#from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.firefox.options import Options
 import os
@@ -19,7 +19,12 @@ def before_scenario(context, scenario):
     print(browser_name)
     os.environ["MOZ_HEADLESS"] = "1"   # ✅ REQUIRED for Jenkins
     if browser_name == "chrome":
-        context.driver = webdriver.Chrome()
+        options = ChromeOptions()
+        options.add_argument('--headless')
+        # Optional: other arguments for robustness
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage') # Useful for Docker/Jenkins environments
+        context.browser = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
         options = Options()
     # ✅ Recommended for Jenkins

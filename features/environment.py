@@ -15,7 +15,30 @@ import os
     #         options.add_argument("--headless")
     #     context.driver = webdriver.Chrome(options=options)
 """
-def before_scenario(context, scenario):
+def before_all(context):
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--window-size=1920,1080")
+
+    # ✅ Download driver ONCE per build
+    service = Service(ChromeDriverManager().install())
+    context.driver = webdriver.Chrome(service=service, options=options)
+
+    url = ConfigReader.read_configuration("basic info", "url")
+    context.driver.get(url
+
+
+def after_all(context):
+    if hasattr(context, "driver"):
+        context.driver.quit()
+
+                       
+
+""" 
+  def before_scenario(context, scenario):
     # Reading configurations from behave.ini
     browser_name = ConfigReader.read_configuration("basic info", "browser")
     print(browser_name)
@@ -30,17 +53,16 @@ def before_scenario(context, scenario):
     else:
         raise ValueError(f"Unsupported browser: {browser_name}")
     context.driver.get(ConfigReader.read_configuration("basic info", "url"))
-
        
-   
-  
+ 
     # context.driver.get('https://tutorialsninja.com/demo/')
     context.driver.get(ConfigReader.read_configuration("basic info", "url"))
 
 def after_scenario(context, scenario):
     if hasattr(context, "driver"):
         context.driver.quit()
-
+"""
+                
 
 
 def after_step(context,step):

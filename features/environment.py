@@ -3,6 +3,7 @@ from selenium import webdriver
 import allure
 from allure_commons.types import AttachmentType
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.firefox.options import Options
 import os

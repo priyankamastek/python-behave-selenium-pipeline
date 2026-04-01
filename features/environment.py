@@ -24,7 +24,7 @@ def before_scenario(context, scenario):
         # Optional: other arguments for robustness
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage') # Useful for Docker/Jenkins environments
-        context.browser = webdriver.Chrome(options=options)
+        context.driver = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
         options = Options()
     # ✅ Recommended for Jenkins

@@ -3,6 +3,8 @@ from selenium import webdriver
 import allure
 from allure_commons.types import AttachmentType
 #from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.firefox.options import Options
 
 """
  #     options = ChromeOptions()
@@ -17,8 +19,13 @@ def before_scenario(context, scenario):
     if browser_name == "chrome":
         context.driver = webdriver.Chrome()
     elif browser_name == "firefox":
-        context.driver = webdriver.Firefox()
-    context.driver.maximize_window()
+        options = Options()
+    # ✅ Recommended for Jenkins
+        options.add_argument("--headless")
+        options.add_argument("--width=1920")
+        options.add_argument("--height=1080")
+        context.driver = webdriver.Firefox(options=options)
+  
     # context.driver.get('https://tutorialsninja.com/demo/')
     context.driver.get(ConfigReader.read_configuration("basic info", "url"))
 

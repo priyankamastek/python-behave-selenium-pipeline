@@ -24,9 +24,8 @@ def before_all(context):
     options.add_argument("--window-size=1920,1080")
 
     # ✅ Download driver ONCE per build
-    service = Service(ChromeDriverManager().install())
+    service = Service("D:/WebDriver/chromedriver.exe")
     context.driver = webdriver.Chrome(service=service, options=options)
-
     url = ConfigReader.read_configuration("basic info", "url")
     context.driver.get(url)
 

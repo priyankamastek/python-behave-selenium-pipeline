@@ -41,7 +41,10 @@ def after_scenario(context, scenario):
 
 
 def after_step(context,step):
-   if step.status == 'failed':
-       allure.attach(context.driver.get_screenshot_as_png()
-                       ,name="failed_screenshot"
-                       ,attachment_type=AttachmentType.PNG)
+  if step.status in ['failed', 'error'] and hasattr(context, "driver"):
+        allure.attach(
+            context.driver.get_screenshot_as_png(),
+            name="screenshot",
+            attachment_type=AttachmentType.PNG
+       )
+

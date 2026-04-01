@@ -17,27 +17,28 @@ def before_scenario(context, scenario):
     # Reading configurations from behave.ini
     browser_name = ConfigReader.read_configuration("basic info", "browser")
     print(browser_name)
-    os.environ["MOZ_HEADLESS"] = "1"   # ✅ REQUIRED for Jenkins
     if browser_name == "chrome":
         options = ChromeOptions()
         options.add_argument('--headless')
         # Optional: other arguments for robustness
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage') # Useful for Docker/Jenkins environments
-        context.driver = webdriver.Chrome(options=options)
-    elif browser_name == "firefox":
-        options = Options()
-    # ✅ Recommended for Jenkins
-        options.add_argument("--headless")
-        options.add_argument("--width=1920")
-        options.add_argument("--height=1080")
-        context.driver = webdriver.Firefox(options=options)
+        service = Service(ChromeDriverManager().install())
+        context.driver = webdriver.Chrome(service=service, options=options)
+    else:
+        raise ValueError(f"Unsupported browser: {browser_name}")
+    context.driver.get(ConfigReader.read_configuration("basic info", "url"))
+
+       
+   
   
     # context.driver.get('https://tutorialsninja.com/demo/')
     context.driver.get(ConfigReader.read_configuration("basic info", "url"))
 
 def after_scenario(context, scenario):
-    context.driver.quit()
+    if hasattr(context, "driver"):
+        context.driver.quit()
+
 
 
 def after_step(context,step):

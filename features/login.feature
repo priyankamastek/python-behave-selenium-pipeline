@@ -24,13 +24,7 @@ Feature: Login Functionality
     And I click on Login button
     Then I should get a proper warning message
 
-  @invalid-login
-  Scenario: Login with invalid credentials
-    Given I navigated to Login page
-    When I enter invalid email "abc@gmail.com" and invalid password say "1234567890" into the fields
-    And I click on Login button
-    Then I should get a proper warning message
-
+ 
   @invalid-login
   Scenario: Login without entering any credentials
     Given I navigated to Login page

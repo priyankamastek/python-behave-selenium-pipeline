@@ -5,6 +5,7 @@ from allure_commons.types import AttachmentType
 #from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.firefox.options import Options
+import os
 
 """
  #     options = ChromeOptions()
@@ -16,6 +17,7 @@ def before_scenario(context, scenario):
     # Reading configurations from behave.ini
     browser_name = ConfigReader.read_configuration("basic info", "browser")
     print(browser_name)
+    os.environ["MOZ_HEADLESS"] = "1"   # ✅ REQUIRED for Jenkins
     if browser_name == "chrome":
         context.driver = webdriver.Chrome()
     elif browser_name == "firefox":

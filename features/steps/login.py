@@ -42,10 +42,6 @@ def step_impl(context,email, password):
     context.login.enter_email_address("amotoriapril2023sample@gmail.com")
     context.login.enter_password("1234567890")
 
-@When(u'I enter invalid email "{email}" and invalid password say "{password}" into the fields')
-def step_impl(context,email, password):
-    context.login.enter_email_address("abc@gmail.com")
-    context.login.enter_password("1234567890")
 
 
 @when(u'I dont enter anything into email and password fields')

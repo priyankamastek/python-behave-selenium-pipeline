@@ -28,7 +28,7 @@ def before_all(context):
     context.driver = webdriver.Chrome(service=service, options=options)
 
     url = ConfigReader.read_configuration("basic info", "url")
-    context.driver.get(url
+    context.driver.get(url)
 
 
 def after_all(context):
